@@ -12,6 +12,5 @@ class Slider(
         var title: String? = null,
         var url: String? = null,
         @OneToOne
-        var image: Document? = null,
-        var location: Int? = null
+        var image: Document? = null
 )

@@ -18,10 +18,9 @@ class SliderController {
     fun postSlider(
             @RequestParam title: String,
             @RequestParam imageFile: MultipartFile,
-            @RequestParam(required = false) url: String?,
-            @RequestParam(required = false) location: Int?
+            @RequestParam(required = false) url: String?
     ): ResponseEntity<Slider> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(sliderService.create(title, url, imageFile, location))
+        return ResponseEntity.status(HttpStatus.CREATED).body(sliderService.create(title, url, imageFile))
     }
 
     @DeleteMapping("/api/slider/{id}")

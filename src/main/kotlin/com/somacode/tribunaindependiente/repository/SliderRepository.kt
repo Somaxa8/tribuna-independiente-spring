@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface SliderRepository : JpaRepository<Slider, Long> {
 
-    fun findByOrderByLocationAsc(): List<Slider>
+    fun findByOrderByIdAsc(): List<Slider>
 }
