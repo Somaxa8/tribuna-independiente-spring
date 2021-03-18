@@ -1,0 +1,22 @@
+task buildDocker(dependsOn: 'build') {
+    doLast {
+
+        exec {
+            commandLine 'docker', 'build', '-f', 'gradle/Dockerfile', '-t', 'ieseuropa', 'build/libs/'
+        }
+
+        def springProfile = 'SPRING_PROFILES_ACTIVE=' + String.valueOf(profile)
+        def pathStorage = '/root/ieseuropa/storage/:/static/storage'
+
+        exec {
+            commandLine 'docker', 'run', '-d',
+                    '--name', 'ieseuropaapi',
+                    '--network', 'ieseuropa',
+                    '-p', '8080:8080',
+                    '-v', pathStorage,
+                    '--restart', 'always',
+                    '-e', springProfile, 'ieseuropa'
+        }
+
+    }
+}

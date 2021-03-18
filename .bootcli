@@ -1,0 +1,8 @@
+{
+    "projectPackage": "com.somacode.tribunaindependiente",
+    "path": "src/main/kotlin/com/somacode/tribunaindependiente/",
+    "entityFolder": "entity",
+    "repositoryFolder": "repository",
+    "serviceFolder": "service",
+    "controllerFolder": "controller"
+}

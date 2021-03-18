@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://tribunadb:3306/tribunadb
+    username: root
+    password: A9kr5ZT5pewv7rj395TCTQXEfMcNQ3X5
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+server:
+  port: 8080
+
+custom:
+  username: admin@tribunaindependiente.pe
+  password: 1234
+  version: 1.0
+  email-enabled: true
+  my-secret-token: my-secret-token
+  access-token-validity: 50000
+  refresh-token-validity: 50000
+  base-url: api.ieseuropa.es
+  protocol: https
