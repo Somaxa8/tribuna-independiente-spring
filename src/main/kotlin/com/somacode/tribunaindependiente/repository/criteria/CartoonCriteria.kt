@@ -1,6 +1,7 @@
 package com.somacode.tribunaindependiente.repository.criteria
 
 import com.somacode.tribunaindependiente.entity.Cartoon
+import com.somacode.tribunaindependiente.entity.Cartoon_
 import com.somacode.tribunaindependiente.service.tool.CriteriaTool
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Repository
