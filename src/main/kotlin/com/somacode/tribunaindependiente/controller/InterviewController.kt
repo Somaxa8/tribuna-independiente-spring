@@ -27,7 +27,7 @@ class InterviewController {
             @PathVariable id: Long,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?,
-            @RequestParam(required = false) videoUrl: String?,
+            @RequestParam(required = false) videoUrl: String?
     ): ResponseEntity<Interview> {
         return ResponseEntity.status(HttpStatus.OK).body(interviewService.update(id, title, body, videoUrl))
     }
