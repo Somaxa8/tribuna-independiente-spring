@@ -45,16 +45,14 @@ class OAuth2Config {
         public override fun configure(http: HttpSecurity) {
             http
                     .requestMatchers().antMatchers(
-                            "/swagger-resources/**", "/swagger-ui.html**", "/swagger",
                             "/oauth/authorize",
                             "/admin/**",
                             "/login", "/logout")
 //                            "/h2-console/**")
                     .and().csrf().disable()
                     .authorizeRequests()
-//                    .antMatchers("/admin/**", "/h2-console/**").hasAnyAuthority(Authority.Name.ROLE_ADMIN.toString())
+//                    .antMatchers("/admin/**", "/h2-console/**").hasAnyAuthority(Authority.Name.ADMIN.toString())
                     .antMatchers("/admin/**").hasAnyAuthority(Authority.Role.ADMIN.toString())
-                    .antMatchers("/swagger-resources/**", "/swagger-ui.html**", "/swagger").hasAnyAuthority(Authority.Role.SWAGGER.toString(), Authority.Role.ADMIN.toString())
                     .and().formLogin().loginPage("/login").failureUrl("/login?error=1").permitAll()
                     .and().logout().logoutUrl("/logout").permitAll()
         }
