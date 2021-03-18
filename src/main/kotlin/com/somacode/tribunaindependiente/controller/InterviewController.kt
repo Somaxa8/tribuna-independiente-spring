@@ -1,7 +1,9 @@
 package com.somacode.tribunaindependiente.controller
 
+import com.somacode.tribunaindependiente.entity.Blog
 import com.somacode.tribunaindependiente.entity.Interview
 import com.somacode.tribunaindependiente.service.InterviewService
+import com.somacode.tribunaindependiente.service.tool.Constants
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -39,8 +41,15 @@ class InterviewController {
     }
 
     @GetMapping("/public/interview")
-    fun getInterviews(): ResponseEntity<List<Interview>> {
-        return ResponseEntity.status(HttpStatus.OK).body(interviewService.findAll())
+    fun getInterviews(
+            @RequestParam(required = false) search: String?,
+            @RequestParam page: Int,
+            @RequestParam size: Int
+    ): ResponseEntity<List<Interview>> {
+        val result = interviewService.findFilterPageable(page, size, search)
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.X_TOTAL_COUNT_HEADER, result.totalElements.toString())
+                .body(result.content)
     }
 
     @GetMapping("/public/interview/{id}")

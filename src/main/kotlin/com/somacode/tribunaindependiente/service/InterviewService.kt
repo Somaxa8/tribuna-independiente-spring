@@ -3,7 +3,10 @@ package com.somacode.tribunaindependiente.service
 import com.somacode.tribunaindependiente.entity.Interview
 import com.somacode.tribunaindependiente.repository.InterviewRepository
 import com.somacode.tribunaindependiente.config.exception.NotFoundException
+import com.somacode.tribunaindependiente.entity.Blog
+import com.somacode.tribunaindependiente.repository.criteria.InterviewCriteria
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -12,6 +15,7 @@ import javax.transaction.Transactional
 class InterviewService {
 
     @Autowired lateinit var interviewRepository: InterviewRepository
+    @Autowired lateinit var interviewCriteria: InterviewCriteria
 
 
     fun init() {
@@ -66,7 +70,7 @@ class InterviewService {
         interviewRepository.deleteById(id)
     }
 
-    fun findAll(): List<Interview> {
-        return interviewRepository.findAll()
+    fun findFilterPageable(page: Int, size: Int, search: String?): Page<Interview> {
+        return interviewCriteria.findFilterPageable(page, size, search)
     }
 }
