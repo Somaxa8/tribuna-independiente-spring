@@ -31,36 +31,39 @@ class UserService {
         if (userRepository.count() == 0L) {
             println("UserService init()")
 
-            register(username, password, "Administrador", false)
+            val user = User(
+                    email = username,
+                    password = passwordEncoder.encode(password),
+                    name = "Administrator"
+            )
+            userRepository.save(user)
             authorityService.relateUser(Authority.Role.ADMIN, 1)
         }
     }
 
-    fun register(email: String, password: String, name: String, sendEmail: Boolean = true): User {
+    fun register(email: String, password: String): User {
         if (!EmailTool.validate(email)) {
             throw BadRequestException("Email is not valid")
         }
         if (userRepository.existsByEmail(email)) {
             throw BadRequestException("Email already exists")
         }
-        if (password.isBlank() || password.length < Constants.PASSWORD_MIN_SIZE) {
-            throw BadRequestException("Password must be greater than 4 characters")
-        }
 
         val user = User(
                 email = email,
-                password = passwordEncoder.encode(password),
-                name = name
+                password = passwordEncoder.encode(password)
         )
 
         userRepository.save(user)
-
+        authorityService.relateUser(Authority.Role.ADMIN, user.id!!)
         return user
     }
 
     fun update(id: Long, request: User): User {
         val user = findById(id)
         request.name?.let { user.name = it }
+        request.lastname?.let { user.lastname = it }
+        request.phone?.let { user.phone = it }
         request.email?.let {
             oAuthService.logoutByUserId(id)
             user.email = it

@@ -19,6 +19,7 @@ class User(
         var password: String? = null,
         var name: String? = null,
         var lastname: String? = null,
+        var phone: String? = null,
 
         @JsonIgnore
         @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)

@@ -20,12 +20,9 @@ class UserController {
     @PostMapping("/api/users/register")
     fun postRegister(
             @RequestParam @Email email: String,
-            @RequestParam @Size(min = 4) password: String,
-            @RequestParam @Size(min = 4) fullName: String
+            @RequestParam password: String
     ): ResponseEntity<User> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                userService.register(email, password, fullName)
-        )
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(email, password))
     }
 
     @PatchMapping("/api/users/{id}")

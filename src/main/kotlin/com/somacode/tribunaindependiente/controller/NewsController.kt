@@ -15,9 +15,9 @@ class NewsController {
     @Autowired lateinit var newsService: NewsService
 
 
-    @PostMapping(value = ["/api/news", "/api/news-label/{labelId}/news"])
+    @PostMapping("/api/news")
     fun postNews(
-            @PathVariable(required = false) labelId: Long?,
+            @RequestParam(required = false) labelId: Long?,
             @RequestParam title: String,
             @RequestParam body: String,
             @RequestParam imageFile: MultipartFile,
@@ -28,10 +28,10 @@ class NewsController {
         )
     }
 
-    @PatchMapping(value = ["/api/news/{id}", "/api/news-label/{labelId}/news/{id}"])
+    @PatchMapping("/api/news/{id}")
     fun patchNews(
             @PathVariable id: Long,
-            @PathVariable(required = false) labelId: Long?,
+            @RequestParam(required = false) labelId: Long?,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?,
             @RequestParam(required = false) imageFile: MultipartFile?,
