@@ -25,7 +25,7 @@ class InterviewController {
     }
 
     @PatchMapping("/api/interview/{id}")
-    fun pathInterview(
+    fun patchInterview(
             @PathVariable id: Long,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?,

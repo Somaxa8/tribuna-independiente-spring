@@ -3,7 +3,10 @@ package com.somacode.tribunaindependiente.service
 import com.somacode.tribunaindependiente.entity.Headline
 import com.somacode.tribunaindependiente.repository.HeadlineRepository
 import com.somacode.tribunaindependiente.config.exception.NotFoundException
+import com.somacode.tribunaindependiente.entity.Cartoon
+import com.somacode.tribunaindependiente.repository.criteria.HeadlineCriteria
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -12,6 +15,7 @@ import javax.transaction.Transactional
 class HeadlineService {
 
     @Autowired lateinit var headlineRepository: HeadlineRepository
+    @Autowired lateinit var headlineCriteria: HeadlineCriteria
 
 
     fun init() {
@@ -55,7 +59,7 @@ class HeadlineService {
         headlineRepository.deleteById(id)
     }
 
-    fun findAll(): List<Headline> {
-        return headlineRepository.findAll()
+    fun findFilterPageable(page: Int, size: Int, search: String?): Page<Headline> {
+        return headlineCriteria.findFilterPageable(page, size, search)
     }
 }

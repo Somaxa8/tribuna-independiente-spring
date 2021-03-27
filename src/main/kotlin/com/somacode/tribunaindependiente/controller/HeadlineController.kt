@@ -1,7 +1,9 @@
 package com.somacode.tribunaindependiente.controller
 
+import com.somacode.tribunaindependiente.entity.Cartoon
 import com.somacode.tribunaindependiente.entity.Headline
 import com.somacode.tribunaindependiente.service.HeadlineService
+import com.somacode.tribunaindependiente.service.tool.Constants
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -22,7 +24,7 @@ class HeadlineController {
     }
 
     @PatchMapping("/api/headline/{id}")
-    fun pathHeadline(
+    fun patchHeadline(
             @PathVariable id: Long,
             @RequestParam(required = false) body: String?,
             @RequestParam(required = false) hour: String?
@@ -37,8 +39,15 @@ class HeadlineController {
     }
 
     @GetMapping("/public/headline")
-    fun getHeadlines(): ResponseEntity<List<Headline>> {
-        return ResponseEntity.status(HttpStatus.OK).body(headlineService.findAll())
+    fun getHeadlines(
+            @RequestParam(required = false) search: String?,
+            @RequestParam page: Int,
+            @RequestParam size: Int
+    ): ResponseEntity<List<Headline>> {
+        val result = headlineService.findFilterPageable(page, size, search)
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(Constants.X_TOTAL_COUNT_HEADER, result.totalElements.toString())
+                .body(result.content)
     }
 
     @GetMapping("/public/headline/{id}")
