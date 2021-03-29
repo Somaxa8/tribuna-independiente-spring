@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-sudo rm -rf /root/ieseuropa/project
-sudo git clone -b master /root/ieseuropa/git /root/ieseuropa/project
-sudo bash -x /root/ieseuropa/project/gradle/bash/deploy.sh
+sudo rm -rf /home/centos/tribuna-independiente/project
+sudo git clone -b master /home/centos/tribuna-independiente/git /home/centos/tribuna-independiente/project
+sudo bash -x /home/centos/tribuna-independiente/project/gradle/bash/deploy.sh
 

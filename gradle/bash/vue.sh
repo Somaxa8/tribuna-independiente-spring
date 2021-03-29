@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-npm run serve --prefix ../../../../vue/ieseuropa-vue/
+npm run serve --prefix ../../../../vue/tribunaindependiente-vue/

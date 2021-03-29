@@ -10,24 +10,24 @@ yum -y update
 yum -y install epel-release nmap git java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
 #CREAMOS JERAQUIA DE CARPETAS
-mkdir /root/ieseuropa
-mkdir /root/ieseuropa/git
-mkdir /root/ieseuropa/mysql
-mkdir /root/ieseuropa/storage
+mkdir /home/centos/tribuna-independiente
+mkdir /home/centos/tribuna-independiente/git
+mkdir /home/centos/tribuna-independiente/mysql
+mkdir /home/centos/tribuna-independiente/storage
 
 
 #INICIALIZO EL REPOSITORIO REMOTO
-cd /root/ieseuropa/git || exit
+cd /home/centos/tribuna-independiente/git || exit
 git init --bare
 
 #INYECTO CODIGO DE AUTODESPLIEGUE PARA INTEGRACIÓN CONTINUA EN EL DISPARADOR POST-RECEIVE
 #(QUE SE EJECUTA AL LLEGAR UN PUSH AL REPOSITORIO)
-cd /root/ieseuropa/git/hooks
+cd /home/centos/tribuna-independiente/git/hooks
 echo "
 #!/usr/bin/env bash
-rm -rf /root/ieseuropa/project
-git clone -b master /root/ieseuropa/git /root/ieseuropa/project
-bash -x /root/ieseuropa/project/gradle/bash/deploy.sh
+rm -rf /home/centos/tribuna-independiente/project
+git clone -b master /home/centos/tribuna-independiente/git /home/centos/tribuna-independiente/project
+bash -x /home/centos/tribuna-independiente/project/gradle/bash/deploy.sh
 " > post-receive
 
 chmod a+x post-receive
@@ -44,5 +44,5 @@ systemctl enable docker
 sudo curl -L "https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 #PREPARO LAS BASES DE DATOS DEL PROYECTO Y LA NETWORK DE DOCKER
-docker network create ieseuropa
-docker run --name ieseuropadb -d --network ieseuropa -p 3306:3306 -e MYSQL_ROOT_PASSWORD=A9kr5ZT5pewv7rj395TCTQXEfMcNQ3X5 -e MYSQL_DATABASE=ieseuropadb -v /root/ieseuropa/mysql:/var/lib/mysql --restart always mariadb --character-set-server=utf8 --collation-server=utf8_general_ci
+docker network create tribunaindependiente
+docker run --name tribunaindependientedb -d --network tribunaindependiente -p 3306:3306 -e MYSQL_ROOT_PASSWORD=A9kr5ZT5pewv7rj395TCTQXEfMcNQ3X5 -e MYSQL_DATABASE=tribunaindependientedb -v /home/centos/tribuna-independiente/mysql:/var/lib/mysql --restart always mariadb --character-set-server=utf8 --collation-server=utf8_general_ci

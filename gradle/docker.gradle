@@ -2,20 +2,20 @@ task buildDocker(dependsOn: 'build') {
     doLast {
 
         exec {
-            commandLine 'docker', 'build', '-f', 'gradle/Dockerfile', '-t', 'ieseuropa', 'build/libs/'
+            commandLine 'docker', 'build', '-f', 'gradle/Dockerfile', '-t', 'tribunaindependiente', 'build/libs/'
         }
 
         def springProfile = 'SPRING_PROFILES_ACTIVE=' + String.valueOf(profile)
-        def pathStorage = '/root/ieseuropa/storage/:/static/storage'
+        def pathStorage = '/home/centos/tribuna-independiente/storage/:/static/storage'
 
         exec {
             commandLine 'docker', 'run', '-d',
-                    '--name', 'ieseuropaapi',
-                    '--network', 'ieseuropa',
+                    '--name', 'tribunaindependienteapi',
+                    '--network', 'tribunaindependiente',
                     '-p', '8080:8080',
                     '-v', pathStorage,
                     '--restart', 'always',
-                    '-e', springProfile, 'ieseuropa'
+                    '-e', springProfile, 'tribunaindependiente'
         }
 
     }
