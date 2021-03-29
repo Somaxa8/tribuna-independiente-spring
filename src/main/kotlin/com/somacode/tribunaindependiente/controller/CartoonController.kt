@@ -25,6 +25,16 @@ class CartoonController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cartoonService.create(title, body, imageFile))
     }
 
+    @PatchMapping("/api/cartoon/{id}")
+    fun patchCartoon(
+            @PathVariable id: Long,
+            @RequestParam title: String?,
+            @RequestParam body: String?,
+            @RequestParam imageFile: MultipartFile?
+    ): ResponseEntity<Cartoon> {
+        return ResponseEntity.status(HttpStatus.OK).body(cartoonService.update(id, title, body, imageFile))
+    }
+
     @DeleteMapping("/api/cartoon/{id}")
     fun deleteCartoon(@PathVariable id: Long): ResponseEntity<Void> {
         cartoonService.delete(id)

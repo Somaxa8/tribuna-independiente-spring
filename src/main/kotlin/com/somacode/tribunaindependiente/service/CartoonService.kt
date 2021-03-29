@@ -40,6 +40,16 @@ class CartoonService {
         return cartoonRepository.save(cartoon)
     }
 
+    fun update(id: Long, title: String?, body: String?, imageFile: MultipartFile?): Cartoon {
+        val cartoon = findById(id)
+
+        title?.let { cartoon.title = it }
+        body?.let { cartoon.body = it }
+        imageFile?.let { cartoon.image = documentService.create(it, Document.Type.IMAGE, Cartoon::class.java.simpleName, null) }
+
+        return cartoonRepository.save(cartoon)
+    }
+
     fun findById(id: Long): Cartoon {
         if (!cartoonRepository.existsById(id)) {
             throw NotFoundException()
@@ -51,6 +61,8 @@ class CartoonService {
         if (!cartoonRepository.existsById(id)) {
             throw NotFoundException()
         }
+        val cartoon = findById(id)
+        cartoon.image?.let { documentService.delete(it.id!!) }
         cartoonRepository.deleteById(id)
     }
 

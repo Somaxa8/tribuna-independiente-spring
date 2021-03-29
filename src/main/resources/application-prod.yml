@@ -1,8 +1,8 @@
 spring:
-  datasource:
-    url: jdbc:mysql://tribunadb:3306/tribunadb
-    username: root
-    password: A9kr5ZT5pewv7rj395TCTQXEfMcNQ3X5
+#  datasource:
+#    url: jdbc:mysql://tribunadb:3306/tribunadb
+#    username: root
+#    password: A9kr5ZT5pewv7rj395TCTQXEfMcNQ3X5
   h2:
     console:
       enabled: true
