@@ -20,5 +20,5 @@ custom:
   my-secret-token: my-secret-token
   access-token-validity: 50000
   refresh-token-validity: 50000
-  base-url: api.ieseuropa.es
-  protocol: https
+  base-url: 51.222.155.30:8080
+  protocol: http
