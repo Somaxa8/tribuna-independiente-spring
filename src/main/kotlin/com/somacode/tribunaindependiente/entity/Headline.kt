@@ -8,4 +8,4 @@ class Headline(
         var id: Long? = null,
         var body: String? = null,
         var hour: String? = null
-)
+): Auditing()

@@ -9,4 +9,4 @@ class Interview(
         var title: String? = null,
         @Lob var body: String? = null,
         var videoUrl: String? = null
-)
+): Auditing()

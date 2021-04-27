@@ -13,4 +13,4 @@ class Slider(
         var url: String? = null,
         @OneToOne
         var image: Document? = null
-)
+): Auditing()

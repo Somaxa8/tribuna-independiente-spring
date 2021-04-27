@@ -10,4 +10,4 @@ class Cartoon(
         var body: String? = null,
         @OneToOne
         var image: Document? = null
-)
+): Auditing()
