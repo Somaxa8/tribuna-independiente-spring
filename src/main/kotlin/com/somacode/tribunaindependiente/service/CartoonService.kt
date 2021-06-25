@@ -6,7 +6,10 @@ import com.somacode.tribunaindependiente.config.exception.NotFoundException
 import com.somacode.tribunaindependiente.entity.Document
 import com.somacode.tribunaindependiente.entity.Interview
 import com.somacode.tribunaindependiente.repository.criteria.CartoonCriteria
+import com.somacode.tribunaindependiente.service.tool.FakerTool
+import com.somacode.tribunaindependiente.service.tool.MockTool
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -19,11 +22,16 @@ class CartoonService {
     @Autowired lateinit var cartoonRepository: CartoonRepository
     @Autowired lateinit var cartoonCriteria: CartoonCriteria
     @Autowired lateinit var documentService: DocumentService
-
+    @Autowired lateinit var mockTool: MockTool
+    @Value("\${custom.mock}") var mock: Boolean = false
 
     fun init() {
-        if (cartoonRepository.count() <= 0) {
-            TODO("IMPLEMENT THIS")
+        if (mock) {
+            println("CartoonService init()")
+            val faker = FakerTool.faker
+            for (i in 1..20) {
+                create(faker.lorem().characters(1, 18), faker.lorem().paragraph(20), mockTool.multipartFileImage())
+            }
         }
     }
 

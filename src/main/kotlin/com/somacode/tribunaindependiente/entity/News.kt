@@ -1,5 +1,6 @@
 package com.somacode.tribunaindependiente.entity
 
+import com.github.javafaker.Faker
 import javax.persistence.*
 
 @Entity

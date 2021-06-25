@@ -6,7 +6,10 @@ import com.somacode.tribunaindependiente.entity.Document
 import com.somacode.tribunaindependiente.entity.Slider
 import com.somacode.tribunaindependiente.repository.BlogRepository
 import com.somacode.tribunaindependiente.repository.criteria.BlogCriteria
+import com.somacode.tribunaindependiente.service.tool.FakerTool
+import com.somacode.tribunaindependiente.service.tool.MockTool
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -19,10 +22,16 @@ class BlogService {
     @Autowired lateinit var blogRepository: BlogRepository
     @Autowired lateinit var blogCriteria: BlogCriteria
     @Autowired lateinit var documentService: DocumentService
+    @Autowired lateinit var mockTool: MockTool
+    @Value("\${custom.mock}") var mock: Boolean = false
 
     fun init() {
-        if (blogRepository.count() <= 0) {
-            TODO("Implement")
+        if (mock) {
+            println("BlogService init()")
+            val faker = FakerTool.faker
+            for (i in 1..20) {
+                create(faker.lorem().characters(10, 18), faker.lorem().paragraph(10), mockTool.multipartFileImage())
+            }
         }
     }
 

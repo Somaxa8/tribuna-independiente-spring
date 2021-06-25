@@ -60,6 +60,7 @@ server:
   port: 8080
 
 custom:
+  mock: true
   username: admin@tribunaindependiente.pe
   password: 1234
   version: 1.0

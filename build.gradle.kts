@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.3.6.RELEASE"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.spring") version "1.3.72"
-    kotlin("plugin.jpa") version "1.3.72"
-    kotlin("kapt") version "1.3.72"
+    kotlin("jvm") version "1.5.10"
+    kotlin("plugin.spring") version "1.5.10"
+    kotlin("plugin.jpa") version "1.5.10"
+    kotlin("kapt") version "1.5.10"
 }
 
 apply {
@@ -65,6 +65,7 @@ dependencies {
     // TOOL
     implementation("com.google.code.gson:gson:2.8.2")
     implementation("commons-io:commons-io:2.6")
+    implementation("com.github.javafaker:javafaker:1.0.2")
 
     // TEST
     implementation("org.springframework.boot:spring-boot-starter-test") {

@@ -53,9 +53,10 @@ class NewsController {
             @RequestParam(required = false) search: String?,
             @RequestParam page: Int,
             @RequestParam size: Int,
-            @RequestParam(required = false) labelId: Long?
+            @RequestParam(required = false) labelId: Long?,
+            @RequestParam featured: Boolean
     ): ResponseEntity<List<News>> {
-        val result = newsService.findFilterPageable(page, size, search, labelId)
+        val result = newsService.findFilterPageable(page, size, search, labelId, featured)
         return ResponseEntity.status(HttpStatus.OK)
                 .header(Constants.X_TOTAL_COUNT_HEADER, result.totalElements.toString())
                 .body(result.content)

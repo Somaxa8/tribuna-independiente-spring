@@ -5,7 +5,10 @@ import com.somacode.tribunaindependiente.repository.InterviewRepository
 import com.somacode.tribunaindependiente.config.exception.NotFoundException
 import com.somacode.tribunaindependiente.entity.Blog
 import com.somacode.tribunaindependiente.repository.criteria.InterviewCriteria
+import com.somacode.tribunaindependiente.service.tool.FakerTool
+import com.somacode.tribunaindependiente.service.tool.MockTool
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
@@ -16,11 +19,20 @@ class InterviewService {
 
     @Autowired lateinit var interviewRepository: InterviewRepository
     @Autowired lateinit var interviewCriteria: InterviewCriteria
-
+    @Autowired lateinit var mockTool: MockTool
+    @Value("\${custom.mock}") var mock: Boolean = false
 
     fun init() {
-        if (interviewRepository.count() <= 0) {
-            create("\"LA GENERACIÓN CONTRA LA IMPUNIDAD\" por Fernando Calle", "prueba", "https://www.facebook.com/tribunaindependiente.pe/videos/3578470795611900/")
+        if (mock) {
+            println("InterviewService init()")
+            val faker = FakerTool.faker
+            for (i in 1..20) {
+                create(
+                        title = faker.lorem().characters(10, 18),
+                        body = faker.lorem().paragraph(30),
+                        videoUrl = "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Ftribunaindependiente.pe%2Fvideos%2F3578470795611900%2F&show_text=false&width=560&t=0"
+                )
+            }
         }
     }
 

@@ -6,6 +6,6 @@ import javax.persistence.*
 class Headline(
         @Id @GeneratedValue
         var id: Long? = null,
-        var body: String? = null,
+        @Lob var body: String? = null,
         var hour: String? = null
 ): Auditing()

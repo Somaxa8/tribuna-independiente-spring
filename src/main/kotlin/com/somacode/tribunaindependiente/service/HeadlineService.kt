@@ -5,7 +5,9 @@ import com.somacode.tribunaindependiente.repository.HeadlineRepository
 import com.somacode.tribunaindependiente.config.exception.NotFoundException
 import com.somacode.tribunaindependiente.entity.Cartoon
 import com.somacode.tribunaindependiente.repository.criteria.HeadlineCriteria
+import com.somacode.tribunaindependiente.service.tool.FakerTool
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
@@ -16,16 +18,20 @@ class HeadlineService {
 
     @Autowired lateinit var headlineRepository: HeadlineRepository
     @Autowired lateinit var headlineCriteria: HeadlineCriteria
-
+    @Value("\${custom.mock}") var mock: Boolean = false
 
     fun init() {
-        if (headlineRepository.count() <= 0) {
-            create("lorem ipsum", "12:00 AM")
+        if (mock) {
+            println("HeadlineService init()")
+            val faker = FakerTool.faker
+            for (i in 1..20) {
+                create(faker.lorem().paragraph(), "10:30 AM")
+            }
         }
     }
 
     fun create(body: String, hour: String): Headline {
-        if (body.isBlank() && hour.isBlank()) {
+        if (body.isNullOrBlank() && hour.isNullOrBlank()) {
             throw IllegalArgumentException()
         }
 

@@ -7,8 +7,10 @@ import com.somacode.tribunaindependiente.entity.Blog
 import com.somacode.tribunaindependiente.entity.Document
 import com.somacode.tribunaindependiente.repository.criteria.BlogCriteria
 import com.somacode.tribunaindependiente.repository.criteria.NewsCriteria
+import com.somacode.tribunaindependiente.service.tool.FakerTool
 import com.somacode.tribunaindependiente.service.tool.MockTool
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -23,12 +25,22 @@ class NewsService {
     @Autowired lateinit var newsLabelService: NewsLabelService
     @Autowired lateinit var documentService: DocumentService
     @Autowired lateinit var mockTool: MockTool
+    @Value("\${custom.mock}") var mock: Boolean = false
+
 
 
     fun init() {
-        if (newsRepository.count() <= 0) {
-            create("Prueba1", "lorem", mockTool.multipartFileImage(), false, 1)
-            create("Prueba2", "lorem", mockTool.multipartFileImage(), true, 1)
+        if (mock) {
+            println("NewsService init()")
+            val faker = FakerTool.faker
+            for (i in 1..20) {
+                create(
+                        title = faker.lorem().characters(10, 18),
+                        body = faker.lorem().paragraph(100),
+                        imageFile = mockTool.multipartFileImage(),
+                        featured = faker.bool().bool(), labelId = 1
+                )
+            }
         }
     }
 
@@ -87,7 +99,7 @@ class NewsService {
         newsRepository.deleteById(id)
     }
 
-    fun findFilterPageable(page: Int, size: Int, search: String?, labelId: Long?): Page<News> {
-        return newsCriteria.findFilterPageable(page, size, search, labelId)
+    fun findFilterPageable(page: Int, size: Int, search: String?, labelId: Long?, featured: Boolean = false): Page<News> {
+        return newsCriteria.findFilterPageable(page, size, search, labelId, featured)
     }
 }
