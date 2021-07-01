@@ -8,5 +8,7 @@ class Interview(
         var id: Long? = null,
         var title: String? = null,
         @Lob var body: String? = null,
+        @OneToOne
+        var image: Document? = null,
         var videoUrl: String? = null
 ): Auditing()

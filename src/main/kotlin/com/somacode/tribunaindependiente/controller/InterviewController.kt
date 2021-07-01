@@ -1,6 +1,5 @@
 package com.somacode.tribunaindependiente.controller
 
-import com.somacode.tribunaindependiente.entity.Blog
 import com.somacode.tribunaindependiente.entity.Interview
 import com.somacode.tribunaindependiente.service.InterviewService
 import com.somacode.tribunaindependiente.service.tool.Constants
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 class InterviewController {
@@ -19,9 +19,10 @@ class InterviewController {
     fun postInterview(
             @RequestParam title: String,
             @RequestParam body: String,
-            @RequestParam videoUrl: String
+            @RequestParam videoUrl: String,
+            @RequestParam imageFile: MultipartFile
     ): ResponseEntity<Interview> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(interviewService.create(title, body, videoUrl))
+        return ResponseEntity.status(HttpStatus.CREATED).body(interviewService.create(title, body, videoUrl, imageFile))
     }
 
     @PatchMapping("/api/interview/{id}")
@@ -29,9 +30,10 @@ class InterviewController {
             @PathVariable id: Long,
             @RequestParam(required = false) title: String?,
             @RequestParam(required = false) body: String?,
-            @RequestParam(required = false) videoUrl: String?
+            @RequestParam(required = false) videoUrl: String?,
+            @RequestParam(required = false) imageFile: MultipartFile?
     ): ResponseEntity<Interview> {
-        return ResponseEntity.status(HttpStatus.OK).body(interviewService.update(id, title, body, videoUrl))
+        return ResponseEntity.status(HttpStatus.OK).body(interviewService.update(id, title, body, videoUrl, imageFile))
     }
 
     @DeleteMapping("/api/interview/{id}")
